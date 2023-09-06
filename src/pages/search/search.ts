@@ -63,7 +63,9 @@ export class Search {
     if (this.searchQuery.length > 1) {
       // Normalize
       let mtd = window["mtd"];
-      let searchQuery = mtd.convertQuery(this.searchQuery);
+      // Unicode Normalization to NFC
+      let searchQuery = this.searchQuery.normalize("NFC");
+      searchQuery = mtd.convertQuery(searchQuery);
       // 1. Exact match
       let searchQueryRegex = new RegExp(
         `(\\s|^){1}${searchQuery}(?=([;.?!\\s]|$))`,
